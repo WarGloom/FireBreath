@@ -156,7 +156,7 @@ namespace FB {
         /// @see FB::URI
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         static FB::SimpleStreamHelperPtr AsyncPost(const FB::BrowserHostPtr& host, const FB::URI& uri, const std::string& postdata, const HttpCallback& callback,
-            bool cache = true, size_t bufferSize = 128*1024);
+            bool cache = true, size_t bufferSize = 128*1024, const std::string& headers = std::string());
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +226,9 @@ namespace FB {
         /// @see FB::URI
         /// @see FB::HttpStreamResponse
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        static HttpStreamResponsePtr SynchronousPost(const FB::BrowserHostPtr& host, const FB::URI& uri, const std::string& postdata, const bool cache = true, const size_t bufferSize = 128*1024);
+        static HttpStreamResponsePtr SynchronousPost(const FB::BrowserHostPtr& host, const FB::URI& uri, const std::string& postdata,
+				const bool cache = true, const size_t bufferSize = 128*1024,
+				const std::string& headers = std::string());
 
 
     public:
@@ -245,8 +247,8 @@ namespace FB {
         size_t received;
         HttpCallback callback;
 
-    private:
         void keepReference(const SimpleStreamHelperPtr& ptr);
+    private:
         SimpleStreamHelperPtr self;
     };
 };

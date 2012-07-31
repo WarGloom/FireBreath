@@ -52,7 +52,7 @@ namespace FB { namespace Npapi {
 
         virtual BrowserStreamPtr _createPostStream(const std::string& url, const PluginEventSinkPtr& callback,
                                             const std::string& postdata, bool cache = true, bool seekable = false,
-                                            size_t internalBufferSize = 128 * 1024 ) const;
+                                            size_t internalBufferSize = 128 * 1024, const std::string& headers = std::string() ) const;
 
     public:
         virtual bool _scheduleAsyncCall(void (*func)(void *), void *userData) const;
