@@ -751,9 +751,8 @@ FB::BrowserStreamPtr NpapiBrowserHost::_createPostStream(const std::string& url,
 	else {
 		headers << custom_headers;
 	}
-    headers << "Content-Length: " << postdata.length() << "\n\n";
-	FBLOG_DEBUG("NpapiBrowserHost", "AAAAA " << headers.str());
-    headers << postdata;
+    headers << "Content-Length: " << postdata.size() << "\n\n";
+    headers.write(postdata.data(), postdata.size());
 
     // always use target = 0 for now
     if ( PostURLNotify( url.c_str(), 0, headers.str().length(), headers.str().c_str(), false, stream.get() ) == NPERR_NO_ERROR )

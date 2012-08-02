@@ -59,7 +59,8 @@ namespace FB {
 
             virtual FB::BrowserStreamPtr _createPostStream(const std::string& url, const FB::PluginEventSinkPtr& callback, 
                                                     const std::string& postdata, bool cache = true, bool seekable = false, 
-                                                    size_t internalBufferSize = 128 * 1024 ) const;
+                                                    size_t internalBufferSize = 128 * 1024,
+													const std::string& headers = std::string()) const;
 
         public:
             FB::DOM::DocumentPtr getDOMDocument();

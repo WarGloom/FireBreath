@@ -292,10 +292,11 @@ bool isExpired(std::pair<void*, FB::WeakIDispatchExRef> cur) {
 }
 
 FB::BrowserStreamPtr ActiveXBrowserHost::_createPostStream(const std::string& url, const FB::PluginEventSinkPtr& callback, 
-                                    const std::string& postdata, bool cache, bool seekable, size_t internalBufferSize ) const
+                                    const std::string& postdata, bool cache, bool seekable, size_t internalBufferSize,
+									const std::string& headers) const
 {
     assertMainThread();
-    ActiveXStreamPtr stream(boost::make_shared<ActiveXStream>(url, cache, seekable, internalBufferSize, postdata));
+    ActiveXStreamPtr stream(boost::make_shared<ActiveXStream>(url, cache, seekable, internalBufferSize, postdata, headers));
     stream->AttachObserver( callback );
 
     if ( stream->init() )
