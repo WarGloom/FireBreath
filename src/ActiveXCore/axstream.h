@@ -29,7 +29,7 @@ namespace FB { namespace ActiveX {
     {
     public:
         ActiveXStream(const std::string& url, bool cache, bool seekable, size_t internalBufferSize );
-        ActiveXStream(const std::string& url, bool cache, bool seekable, size_t internalBufferSize, const std::string& verbdata );
+        ActiveXStream(const std::string& url, bool cache, bool seekable, size_t internalBufferSize, const std::string& verbdata, const std::string& headers );
         virtual ~ActiveXStream();
         
         virtual bool readRanges( const std::vector<Range>& ranges );

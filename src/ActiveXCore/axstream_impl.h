@@ -47,6 +47,7 @@ namespace FB { namespace ActiveX {
         CComPtr<ActiveXBindStatusCallback> bindStatusCallback;
         CComPtr<IStream>    fstream;
         std::vector<FB::BrowserStream::Range>   ranges;
+		std::string 		headers;
     };
 
     typedef boost::shared_ptr<ActiveXStreamRequest> ActiveXStreamRequestPtr;

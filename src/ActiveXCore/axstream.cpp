@@ -24,7 +24,8 @@ ActiveXStream::ActiveXStream( const std::string& url, bool cache, bool seekableR
 {
 }
 
-ActiveXStream::ActiveXStream( const std::string& url, bool cache, bool seekableRequested, size_t internalBufferSize, const std::string& verbdata ) : FB::BrowserStream( url, cache, seekableRequested, internalBufferSize ), closing(false), data(verbdata)
+ActiveXStream::ActiveXStream( const std::string& url, bool cache, bool seekableRequested, size_t internalBufferSize,
+		const std::string& verbdata ) : FB::BrowserStream( url, cache, seekableRequested, internalBufferSize ), closing(false), data(verbdata)
 {
 }
 
