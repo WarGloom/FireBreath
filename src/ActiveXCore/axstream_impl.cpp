@@ -130,7 +130,8 @@ HRESULT ActiveXBindStatusCallback::InitPostData(const std::string& data)
         }
 
         // the memory was allocate fixed, so no need to lock it down
-        ::lstrcpynA((char*)m_hDataToPost, data.data(), data.size());
+        //::lstrcpynA((char*)m_hDataToPost, data.data(), data.size());
+		::memcpy(m_hDataToPost, data.data(), data.size());
     }
     
     return NOERROR;
@@ -328,6 +329,7 @@ ActiveXBindStatusCallback::GetBindInfo(DWORD* pgrfBINDF, BINDINFO* pbindInfo)
             // Fill the STGMEDIUM with the data to post
             pbindInfo->stgmedData.tymed = TYMED_HGLOBAL;    // this is the only medium urlmon supports right now
             pbindInfo->stgmedData.hGlobal = m_hDataToPost;
+			
             pbindInfo->stgmedData.pUnkForRelease = (LPUNKNOWN)(LPBINDSTATUSCALLBACK)this; //  maintain control over the data. 
             AddRef();   // It will be freed on final release
             pbindInfo->cbstgmedData =   // this must be exact! 
