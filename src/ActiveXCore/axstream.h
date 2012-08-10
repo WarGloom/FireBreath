@@ -56,6 +56,7 @@ namespace FB { namespace ActiveX {
         std::set< ActiveXStreamRequestPtr > requests;
         bool    closing;
         std::string data;
+		std::string headers;
     };
     typedef boost::shared_ptr<ActiveXStream> ActiveXStreamPtr;
 } }

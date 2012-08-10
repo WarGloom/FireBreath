@@ -457,11 +457,11 @@ STDMETHODIMP ActiveXBindStatusCallback::BeginningTransaction(LPCWSTR szURL,
     // This header is required when performing a POST operation
     if (BINDVERB_POST == m_dwAction && m_hDataToPost)
     {
-		if (m_request->headers.empty()) {
-        extraHeaders << L"Content-Type: application/x-www-form-urlencoded\r\n";
+		if (m_request->stream->headers.empty()) {
+			extraHeaders << L"Content-Type: application/x-www-form-urlencoded\r\n";
 		}
 		else {
-			extraHeaders << m_request->headers;
+			extraHeaders << FB::utf8_to_wstring(m_request->stream->headers);
 		}
     }
 
