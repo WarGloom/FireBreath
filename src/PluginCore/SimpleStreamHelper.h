@@ -295,8 +295,9 @@ namespace FB {
         size_t received;
         HttpCallback callback;
 
-    private:
+	protected:
         void keepReference(const SimpleStreamHelperPtr& ptr);
+    private:
         SimpleStreamHelperPtr self;
         BrowserStreamPtr streamPtr;
     };
