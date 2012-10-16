@@ -437,26 +437,31 @@ STDMETHODIMP ActiveXBindStatusCallback::BeginningTransaction(LPCWSTR szURL,
     *pszAdditionalHeaders = NULL;
 
     std::wstringstream extraHeaders;
+	if (m_request->stream->headers.empty()) {
 
-    extraHeaders << L"Accept-Encoding: identity\r\n";
+			extraHeaders << L"Accept-Encoding: identity\r\n";
 
-    if ( m_request->ranges.size() )
-    {
-        extraHeaders << L"Range: bytes=";
-        for ( std::vector<BrowserStream::Range>::const_iterator it = m_request->ranges.begin(); it != m_request->ranges.end(); ++it )
-        {
-            extraHeaders << it->start << L"-" << (it->end - 1);
-            if ( (it+1) != m_request->ranges.end() ) extraHeaders << L",";
-        }
-        extraHeaders << L"\r\n";
-    }
+		if ( m_request->ranges.size() )
+		{
+			extraHeaders << L"Range: bytes=";
+			for ( std::vector<BrowserStream::Range>::const_iterator it = m_request->ranges.begin(); it != m_request->ranges.end(); ++it )
+			{
+				extraHeaders << it->start << L"-" << (it->end - 1);
+				if ( (it+1) != m_request->ranges.end() ) extraHeaders << L",";
+			}
+			extraHeaders << L"\r\n";
+		}
 
-    // This header is required when performing a POST operation
-    if (BINDVERB_POST == m_dwAction && m_hDataToPost)
-    {
-        extraHeaders << L"Content-Type: application/x-www-form-urlencoded\r\n";
-    }
+		// This header is required when performing a POST operation
+		if (BINDVERB_POST == m_dwAction && m_hDataToPost)
+		{
+			extraHeaders << L"Content-Type: application/x-www-form-urlencoded\r\n";
+		}
 
+	}
+	else {
+		extraHeaders << FB::utf8_to_wstring(m_request->stream->headers);
+	}
     LPWSTR wszAdditionalHeaders = 
         (LPWSTR)CoTaskMemAlloc((extraHeaders.str().size()+1) *sizeof(WCHAR));
     if (!wszAdditionalHeaders)
