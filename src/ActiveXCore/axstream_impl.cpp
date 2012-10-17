@@ -437,7 +437,7 @@ STDMETHODIMP ActiveXBindStatusCallback::BeginningTransaction(LPCWSTR szURL,
     *pszAdditionalHeaders = NULL;
 
     std::wstringstream extraHeaders;
-	if (m_request->stream->headers.empty()) {
+	if (m_request->stream->getHeaders().empty()) {
 
 			extraHeaders << L"Accept-Encoding: identity\r\n";
 
@@ -460,7 +460,7 @@ STDMETHODIMP ActiveXBindStatusCallback::BeginningTransaction(LPCWSTR szURL,
 
 	}
 	else {
-		extraHeaders << FB::utf8_to_wstring(m_request->stream->headers);
+		extraHeaders << FB::utf8_to_wstring(m_request->stream->getHeaders());
 	}
     LPWSTR wszAdditionalHeaders = 
         (LPWSTR)CoTaskMemAlloc((extraHeaders.str().size()+1) *sizeof(WCHAR));

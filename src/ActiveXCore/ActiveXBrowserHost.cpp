@@ -277,7 +277,7 @@ FB::BrowserStreamPtr FB::ActiveX::ActiveXBrowserHost::_createStream( const Brows
     ActiveXStreamPtr stream;
     if (req.method == "POST") {
         stream = boost::make_shared<ActiveXStream>(url, req.cache, req.seekable, req.internalBufferSize, req.getPostData());
-		stream->setHeaders(req.getHeaders())
+		stream->setHeaders(req.getPostHeaders());
     } else {
         stream = boost::make_shared<ActiveXStream>(url, req.cache, req.seekable, req.internalBufferSize);
     }
