@@ -98,14 +98,14 @@ HRESULT ActiveXBindStatusCallback::Init(ActiveXStreamRequestPtr request)
     {
         // Is a post request
         m_dwAction = BINDVERB_POST;
-        hr = InitPostData(m_request->stream->getVerbData().c_str());
+        hr = InitPostData(m_request->stream->getVerbData());
     }
 
     m_dwAction = m_request->stream->getVerbData().empty()? BINDVERB_GET : BINDVERB_POST;
     return hr;
 }
 
-HRESULT ActiveXBindStatusCallback::InitPostData(const char* szData)
+HRESULT ActiveXBindStatusCallback::InitPostData(const std::string & sData)
 {
     if (m_hDataToPost)
     {
@@ -115,19 +115,19 @@ HRESULT ActiveXBindStatusCallback::InitPostData(const char* szData)
         return E_FAIL; 
     }
 
-    if (szData)
+    if (sData.size())
     {
         // MSINTERNAL: See CINetHttp::INetAsyncSendRequest (cnethttp.cxx) that URLMON calls CINetHttp::GetDataToSend() followed by a call to WININET's HttpSendRequest(). GetDataToSend essentially pulls the data out of the BINDINFO that URLMON has cached away when it calls the host's implementation of IBindStatusCallback::GetBindInfo(). 
         // MSINTERNAL: It doesn't attempt to lock down the HGLOBAL at all, so we need to allocated GMEM_FIXED
-        m_cbDataToPost = ::lstrlenA(szData);
+        m_cbDataToPost = sData.size();
         m_hDataToPost = ::GlobalAlloc(GPTR, m_cbDataToPost+1); // GMEM_MOVEABLE won't work because URLMON doesn't attempt GlobalLock before dereferencing
         if (!m_hDataToPost)
         {
             return E_OUTOFMEMORY;
         }
 
-        // the memory was allocate fixed, so no need to lock it down
-        ::lstrcpyA((char*)m_hDataToPost, szData);
+        // the memory was allocate fixed, so no need to lock it down        
+		::lstrcpynA((char*)m_hDataToPost, sData.data(), sData.size());
     }
     
     return NOERROR;
@@ -461,6 +461,7 @@ STDMETHODIMP ActiveXBindStatusCallback::BeginningTransaction(LPCWSTR szURL,
 	}
 	else {
 		extraHeaders << FB::utf8_to_wstring(m_request->stream->getHeaders());
+		//extraHeaders << L"\r\n";
 	}
     LPWSTR wszAdditionalHeaders = 
         (LPWSTR)CoTaskMemAlloc((extraHeaders.str().size()+1) *sizeof(WCHAR));

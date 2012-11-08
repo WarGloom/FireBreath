@@ -89,7 +89,7 @@ namespace FB { namespace ActiveX {
 
         static HRESULT Create(ActiveXBindStatusCallback** ppBindStatusCallback, ActiveXStreamRequestPtr request);
         HRESULT Init(ActiveXStreamRequestPtr request);
-        HRESULT InitPostData(const char* szData);
+        HRESULT InitPostData(const std::string & sData);
 
         bool close();
 
