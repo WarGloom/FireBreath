@@ -127,7 +127,8 @@ HRESULT ActiveXBindStatusCallback::InitPostData(const std::string & sData)
         }
 
         // the memory was allocate fixed, so no need to lock it down        
-		::lstrcpynA((char*)m_hDataToPost, sData.data(), sData.size());
+		//::lstrcpynA((char*)m_hDataToPost, sData.data(), sData.size());
+		::memcpy(m_hDataToPost, sData.data(), sData.size());
     }
     
     return NOERROR;
