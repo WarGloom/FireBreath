@@ -101,7 +101,7 @@ void PluginWindowX11::getWindowPosition(int32_t &x, int32_t &y, uint32_t &w, uin
 
 FB::Rect PluginWindowX11::getWindowPosition() const
 {
-    FB::Rect rect = {m_y, m_x, m_y+m_height, m_x+m_width};
+    FB::Rect rect = {m_y, m_x, static_cast<int32_t>(m_y+m_height), static_cast<int32_t>(m_x+m_width)};
     return rect;
 }
 

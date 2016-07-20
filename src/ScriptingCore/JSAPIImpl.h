@@ -71,13 +71,13 @@ namespace FB
         ///
         /// @brief  Invalidates this object.
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        void invalidate();
+        void invalidate() override;
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// @fn void shutdown()
         ///
         /// @brief  Called to notify the object that the plugin is shutting down
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void shutdown() {};
+        virtual void shutdown() override {};
 
     protected:
         virtual void fireAsyncEvent( std::string eventName, const std::vector<variant>& args );
